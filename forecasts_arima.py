@@ -10,6 +10,8 @@ from plotly import graph_objects
 import statsmodels.api as sm
 from statsmodels.tsa.stattools import adfuller
 import statsmodels.formula.api as smf
+from sklearn.metrics import mean_squared_error 
+from statsmodels.tools.eval_measures import rmse
 from statsmodels.tsa.arima_model import ARMA
 from pmdarima.arima import ADFTest
 from statsmodels.tsa.seasonal import seasonal_decompose 
@@ -93,9 +95,6 @@ predictions = result.predict(start, end, typ = 'levels').rename("Predictions")
 print(predictions)
 
 print(predictions.index)
-
-from sklearn.metrics import mean_squared_error 
-from statsmodels.tools.eval_measures import rmse
 
 # Calculate root mean squared error 
 rmse(test["Open"], predictions)
