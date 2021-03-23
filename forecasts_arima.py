@@ -45,33 +45,43 @@ fig.show()
 
 # """**ARIMA**
 
-# * p is the auto-regressive part of the model, incorporating the effect of the past.
+# Parameter p is the auto-regressive part of the model and incorporates the effect of the past
 
-# * d is the integrated part of the model. This includes terms in the model that incorporate the amount of differencing: the number of past times to subtract from the present time.
+# Parameter d is the integrated part of the model
+# This includes terms in the model that incorporate the amount of differencing: 
+# the number of past times to subtract from the present time.
 
-# * q is the moving average part of the model. This allows us to set the error of our model as a linear combination of the error values observed at previous time points in the past.
+# Paramter q is the moving average part of the model
+# This allows us to set the error of our model as a linear combination 
+# of the error values observed at previous time points in the past
 
-# * When dealing with seasonal effects, we make use of the seasonal ARIMA, which is denoted as ARIMA(p,d,q)(P,D,Q)s. Here, (p, d, q) are the non-seasonal parameters described above, while (P, D, Q) follow the same definition but are applied to the seasonal component of the time series. The term s is the periodicity of the time series (4 for quarterly periods, 12 for yearly periods, etc.).
+# Seasonal ARIMA, which is denoted as ARIMA(p,d,q)(P,D,Q)s handles accounts for seasonality
+# (p, d, q) are the non-seasonal parameters described above, 
+# (P, D, Q) follow the same definition but are applied to the seasonal component of the time series
+
+# Parater s is the periodicity of the time series (4 for quarterly periods, 12 for yearly periods, etc.)
 
 # **Model**
+# Goal is to find the values of ARIMA(p,d,q)(P,D,Q)s that optimize a metric of interest
 
-# * When looking to fit time series data with a seasonal ARIMA model, our first goal is to find the values of ARIMA(p,d,q)(P,D,Q)s that optimize a metric of interest.
-# """
 
-# Fit auto_arima function to  dataset 
+# Fit auto_arima function to  dataset
+# Do not want to know if an order does not work
+# no convergence warnings
+# set to stepwise
 stepwise_fit = auto_arima(data['Open'], start_p = 1, start_q = 1, 
                           max_p = 3, max_q = 3, m = 12, 
                           start_P = 0, seasonal = True, 
                           d = None, D = 1, trace = True, 
-                          error_action ='ignore',   # we don't want to know if an order does not work 
-                          suppress_warnings = True,  # we don't want convergence warnings 
-                          stepwise = True)           # set to stepwise
+                          error_action ='ignore',    
+                          suppress_warnings = True,  
+                          stepwise = True)           
 
 stepwise_fit.summary()
 
 # Split data into train / test sets 
 train = data.iloc[:len(data)-12] 
-test = data.iloc[len(data)-12:] # set one year(12 months) for testing
+test = data.iloc[len(data)-12:]
 
 print(test)
 
